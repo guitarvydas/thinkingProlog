@@ -1,0 +1,25 @@
+* https://www.cpp.edu/~jrfisher/www/prolog_tutorial/2_15.html
+* factbase
+edge(1,2).
+edge(1,4).
+edge(1,3).
+edge(2,3).
+edge(2,5).
+edge(3,4).
+edge(3,5).
+edge(4,5).
+* basic relation
+connected(X,Y) :- edge(X,Y).
+connected(X,Y) :- edge(Y,X).
+* alternate basic relation
+connected(X,Y) :- edge(X,Y) ; edge(Y,X).
+* inferring connections
+** Divide and Conquer
+** base case
+path(A,B,P,[B|P]) :- connected(A,B).
+** recursive case
+travel(A,B,Visited,Path) :-
+       connected(A,C),           
+       C \== B,
+       \+member(C,Visited),
+       travel(C,B,[C|Visited],Path). 

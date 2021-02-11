@@ -1,1 +1,2 @@
 thinkingRelational
+see README.org
