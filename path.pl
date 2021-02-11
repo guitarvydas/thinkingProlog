@@ -13,8 +13,8 @@ connected(X,Y) :- edge(Y,X).
 path(A,B,Path) :- BasicPath = [A], inferPath(A,B,BasicPath,Path).
 
 inferPath(A,B,P,ResultPath) :- connected(A,B), ResultPath = [B|P].
-inferPath(A,B,Visited,Path) :-
+inferPath(A,B,PathSoFar,Path) :-
        connected(A,C),           
        C \== B,
-       \+member(C,Visited),
-       inferPath(C,B,[C|Visited],Path).  
+       \+member(C,PathSoFar),
+       inferPath(C,B,[C|PathSoFar],Path).  
