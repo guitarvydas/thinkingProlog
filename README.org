@@ -15,11 +15,11 @@ connected(X,Y) :- edge(Y,X).
 connected(X,Y) :- edge(X,Y) ; edge(Y,X).
 * inferring connections
 ** Divide and Conquer
-** top level
+*** top level
 path(A,B,Path) :- inferPath(A,B,[A],Path).
-** base case
+*** base case
 inferPath(A,B,P,[B|P]) :- connected(A,B).
-** recursive case
+*** recursive case
 inferPath(A,B,Visited,Path) :-
        connected(A,C),           
        C \== B,
