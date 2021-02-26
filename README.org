@@ -1,4 +1,14 @@
-* referring to: https://www.cpp.edu/~jrfisher/www/prolog_tutorial/2_15.html
+
+
+
+* PROLOG for Programmers Introduction (in PROLOG)
+* using: https://www.cpp.edu/~jrfisher/www/prolog_tutorial/2_15.html
+* Declarative <== Relational
+* PROLOG == Relational
+* miniKanren == Relational
+
+* figure
+[[./f2_15.gif][figure]]
 * factbase
 edge(1,2).
 edge(1,4).
@@ -15,13 +25,41 @@ connected(X,Y) :- edge(Y,X).
 connected(X,Y) :- edge(X,Y) ; edge(Y,X).
 * inferring connections
 ** Divide and Conquer
-*** top level
+*** do-it style
+**** top level
+path(A,B,Path) :- BasicPath = [A], inferPath(A,B,BasicPath,Path).
+**** base case
+inferPath(A,B,P,ResultPath) :- connected(A,B), ResultPath = [B|P].
+**** recursive case
+inferPath(A,B,PriorPath,ResultPath) :-
+       connected(A,C),           
+       C \== B,
+       \+member(C,PriorPath),
+       NewPath = [ C | PriorPath ],
+       inferPath(C,B,NewPath,ResultPath).  
+
+*** PROLOGify - Better Relations
+**** top level
+path(A,B,Path) :- BasicPath = [A], inferPath(A,B,BasicPath,Path).
+---> 
 path(A,B,Path) :- inferPath(A,B,[A],Path).
-*** base case
+**** base case
+inferPath(A,B,P,ResultPath) :- connected(A,B), ResultPath = [B|P].
+--->
 inferPath(A,B,P,[B|P]) :- connected(A,B).
-*** recursive case
+**** recursive case
+inferPath(A,B,PriorPath,ResultPath) :-
+       connected(A,C),           
+       C \== B,
+       \+member(C,PriorPath),
+       NewPath = [ C | PriorPath ],
+       inferPath(C,B,NewPath,ResultPath).  
+--->
 inferPath(A,B,Visited,Path) :-
        connected(A,C),           
        C \== B,
        \+member(C,Visited),
        inferPath(C,B,[C|Visited],Path).  
+
+
+       

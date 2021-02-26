@@ -1,0 +1,2 @@
+#!/bin/bash
+swipl -g 'consult(path)' -g 'path(1,5,P)'
