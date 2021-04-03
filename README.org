@@ -1,6 +1,4 @@
 
-
-
 * PROLOG for Programmers Introduction (in PROLOG)
 * using: https://www.cpp.edu/~jrfisher/www/prolog_tutorial/2_15.html
 * Declarative <== Relational
@@ -62,4 +60,27 @@ inferPath(A,B,Visited,Path) :-
        inferPath(C,B,[C|Visited],Path).  
 
 
+       
+
+* SWIPL at command line
+  > swipl
+  ?- consult(path).
+  ?- path(5,1,R).
+  ?- halt.
+* SWIPL in Bash script
+  #!/bin/bash
+  swipl -q \
+      -g 'consult(path)' \
+      -g 'use_module(library(http/json))' \
+      -g 'bagof(R,path(5,1,R),B),write(B),nl.' \
+      -g 'halt'
+* SWIPL with JSON
+  #!/bin/bash
+  swipl -q \
+      -g 'consult(path)' \
+      -g 'use_module(library(http/json))' \
+      -g 'bagof(R,path(5,1,R),B),json_write(user_output,B),nl.' \
+      -g 'halt'
+  
+  
        

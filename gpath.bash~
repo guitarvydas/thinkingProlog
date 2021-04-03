@@ -1,4 +1,0 @@
-#!/bin/bash
-gprolog --consult-file 'path.pl' --query 'path(1,5,P)' --query 'halt'
-
-swipl -g 'consult(path)' -g 'path(1,5,P)' -g 'halt'
